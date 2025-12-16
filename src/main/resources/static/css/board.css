@@ -1,0 +1,26 @@
+#board{
+    display:grid;
+    grid-template-columns:repeat(8, 100px);
+    grid-template-rows:repeat(8,100px);
+    width:800px;
+    height:800px;
+    position: relative
+}
+
+.square{
+    height: 100px;
+    width:100px
+}
+
+.white{ background: #ffdddd}
+.black{ background: black}
+
+.piece{
+    width:95%;
+    height:95%;
+    object-fit: contain;
+    pointer-events: none;
+    grid-row-start:auto;
+    grid-column-start: auto;
+    /*padding:2px;*/
+}
