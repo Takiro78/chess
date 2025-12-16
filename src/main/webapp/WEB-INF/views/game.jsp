@@ -24,5 +24,7 @@
 
 
     </div>
+
+<script src="/scripts/board.js"></script>
 </body>
 </html>

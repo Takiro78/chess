@@ -12,6 +12,11 @@
     width:100px
 }
 
+.selected {
+    box-shadow: inset 0 0 0 5px red;
+}
+
+
 .white{ background: #ffdddd}
 .black{ background: black}
 
