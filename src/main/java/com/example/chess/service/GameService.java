@@ -1,9 +1,12 @@
 package com.example.chess.service;
 
 import com.example.chess.ChessApplication;
+import com.example.chess.dto.moveDto;
 import com.example.chess.model.Color;
 import com.example.chess.model.pieces.Piece;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GameService {
@@ -17,10 +20,10 @@ public class GameService {
         }
     }
 
-    public int[][] getValidMoves(int row, int col){
+    public List<moveDto> getValidMoves(int row, int col){
         Piece searchPiece =  board[row][col];
 
-        return null;
+        return List.of(new moveDto(0,0));
     }
 
 

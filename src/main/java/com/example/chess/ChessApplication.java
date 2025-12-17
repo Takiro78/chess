@@ -35,23 +35,7 @@ public class ChessApplication {
         pieces.add(new Pawn(1,7,Color.BLACK));
 
 
-        pieces.add(new Rook(0,0,Color.BLACK));
-        pieces.add(new Knight(0,1,Color.BLACK));
-        pieces.add(new Bishop(0,2,Color.BLACK));
-        pieces.add(new Queen(0,3,Color.BLACK));
-        pieces.add(new King(0,4,Color.BLACK));
-        pieces.add(new Bishop(0,5,Color.BLACK));
-        pieces.add(new Knight(0,6,Color.BLACK));
-        pieces.add(new Rook(0,7,Color.BLACK));
 
-        pieces.add(new Pawn(1,0,Color.BLACK));
-        pieces.add(new Pawn(1,1,Color.BLACK));
-        pieces.add(new Pawn(1,2,Color.BLACK));
-        pieces.add(new Pawn(1,3,Color.BLACK));
-        pieces.add(new Pawn(1,4,Color.BLACK));
-        pieces.add(new Pawn(1,5,Color.BLACK));
-        pieces.add(new Pawn(1,6,Color.BLACK));
-        pieces.add(new Pawn(1,7,Color.BLACK));
 
 
         pieces.add(new Rook(7, 0, Color.WHITE));

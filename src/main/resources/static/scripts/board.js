@@ -6,36 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const squares = document.querySelectorAll(".square")
     let currentSquare=null;
 
-    squares.forEach(square =>{
-        square.addEventListener("click", () => {
-            const row = square.dataset.row;
-            const col = square.dataset.col;
 
-
-            const piece = document.querySelector(`.piece.pos-${row}${col}`);
-
-            if (piece){
-
-                // if square already clicked, reset it
-                if (currentSquare) {
-                    currentSquare.classList.remove("selected");
-                }
-
-                //if a new square or unselected square clicked
-                if (currentSquare != square) {
-                    square.classList.add("selected");
-                    currentSquare = square;
-                }
-
-                //clicking the same square and unselecting
-                else{currentSquare=null;}
-                // console.log("piece "+row+", "+col+" ");
-            }
-            else{
-                console.log("nope"+row+col)
-            }
-        });
-    });
 
     const pieces = document.querySelectorAll(".piece");
     console.log("dsflk");
@@ -58,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             //if a new square or unselected square clicked
             if (currentSquare != square) {
                 square.classList.add("selected");
+                fetchMoves(square.dataset.row,square.dataset.col)
                 currentSquare = square;
             }
 
@@ -67,3 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+async function fetchMoves(row,col){
+    try{
+        const response = await fetch(`/game/getMoves/${row}/${col}`);
+
+        if(!response.ok){
+            throw new Error("could not fetch moves");
+        }
+
+        const data = await response.json();
+        console.log(data);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
