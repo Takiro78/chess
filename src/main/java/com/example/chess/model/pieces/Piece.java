@@ -30,5 +30,7 @@ public abstract class Piece {
         imgPath = "/pieces/pixel_chess/pieces/"+color.toString()+"_"+this.getClass().getSimpleName()+".png";
     }
 
+    public abstract int[][] findMyMoves(Piece[][] board, int row, int col);
+
 
 }

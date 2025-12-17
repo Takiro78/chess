@@ -7,4 +7,8 @@ public class Bishop extends Piece {
         super(r, c, color);
         setPath();
     }
+
+    public int[][] findMyMoves(Piece[][] board, int row, int col){
+        return null;
+    }
 }

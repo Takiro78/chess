@@ -5,22 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="/css/piecePos.css">
 </head>
 <body>
     <div id="board">
 
         <c:forEach var="row" begin="0" end="7">
             <c:forEach var="col" begin="0" end="7">
-                <div class="square ${((row + col) % 2 == 0) ? 'white' : 'black'}" data-row="${row}" data-col="${col}">
-                    <c:forEach var="piece" items="${pieces}">
-                        <c:if test="${piece.row == row && piece.col == col}">
-                            <img src="${piece.imgPath}" alt="${piece.type}" class="piece">
-                        </c:if>
-                    </c:forEach>
+                <div class="square ${((row + col) % 2 == 0) ? 'white' : 'black'} pos-${row}${col}" data-row="${row}" data-col="${col}">
+
                 </div>
             </c:forEach>
         </c:forEach>
 
+        <c:forEach var="piece" items="${pieces}">
+
+                <img src="${piece.imgPath}" alt="${piece.type}" class="piece square pos-${piece.row}${piece.col}">
+
+        </c:forEach>
 
 
     </div>

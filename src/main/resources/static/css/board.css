@@ -1,7 +1,7 @@
 #board{
-    display:grid;
-    grid-template-columns:repeat(8, 100px);
-    grid-template-rows:repeat(8,100px);
+    /*display:grid;*/
+    /*grid-template-columns:repeat(8, 100px);*/
+    /*grid-template-rows:repeat(8,100px);*/
     width:800px;
     height:800px;
     position: relative
@@ -9,8 +9,12 @@
 
 .square{
     height: 100px;
-    width:100px
+    width:100px;
+    position: absolute;
 }
+
+
+
 
 .selected {
     box-shadow: inset 0 0 0 5px red;
@@ -21,11 +25,11 @@
 .black{ background: black}
 
 .piece{
-    width:95%;
-    height:95%;
+    width:100px;
+    height:100px;
     object-fit: contain;
-    pointer-events: none;
-    grid-row-start:auto;
-    grid-column-start: auto;
+    /*pointer-events: none;*/
+    /*grid-row-start:auto;*/
+    /*grid-column-start: auto;*/
     /*padding:2px;*/
 }
