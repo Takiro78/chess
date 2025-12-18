@@ -1,10 +1,14 @@
 package com.example.chess.model.pieces;
 
+import com.example.chess.dto.moveDto;
 import com.example.chess.model.Color;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+//import java.awt.*;
 
 public abstract class Piece {
     @Getter
@@ -18,6 +22,10 @@ public abstract class Piece {
     @Getter
     protected String imgPath;
 
+    protected  int[][] getOffsets(){
+        return new int[][]{};
+    }
+
 
 
     public Piece(int row, int column, Color color) {
@@ -30,7 +38,35 @@ public abstract class Piece {
         imgPath = "/pieces/pixel_chess/pieces/"+color.toString()+"_"+this.getClass().getSimpleName()+".png";
     }
 
-    public abstract int[][] findMyMoves(Piece[][] board, int row, int col);
+    public  List<moveDto> findMyMoves(Piece[][] board, int row, int col){
+        List<moveDto> validMoves = new ArrayList<>();
 
+        for (int[] offset: getOffsets()){
+            int  moveRow = row + offset[0];
+            int moveCol = col + offset[1];
+
+            if (inbounds(moveRow, moveCol)){
+                if (isFriend(board[moveRow][moveCol])){
+                    continue;
+                }
+
+                validMoves.add(new moveDto(moveRow, moveCol));
+
+            }
+        }
+        System.out.println(validMoves);
+        return validMoves;
+    }
+
+    public boolean inbounds(int moveRow, int moveCol) {
+        return moveRow >= 0 && moveRow < 8 && moveCol >= 0 && moveCol < 8;
+    }
+
+    public boolean isFriend(Piece piece){
+        if (piece ==null){
+            return false;
+        }
+        return piece.color == this.color;
+    }
 
 }

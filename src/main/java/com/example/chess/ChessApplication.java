@@ -41,7 +41,7 @@ public class ChessApplication {
         pieces.add(new Rook(7, 0, Color.WHITE));
         pieces.add(new Knight(7, 1, Color.WHITE));
         pieces.add(new Bishop(7, 2, Color.WHITE));
-        pieces.add(new Queen(7, 3, Color.WHITE));
+        pieces.add(new Queen(4, 3, Color.WHITE));
         pieces.add(new King(7, 4, Color.WHITE));
         pieces.add(new Bishop(7, 5, Color.WHITE));
         pieces.add(new Knight(7, 6, Color.WHITE));

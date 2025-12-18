@@ -6,6 +6,7 @@ import com.example.chess.model.Color;
 import com.example.chess.model.pieces.Piece;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +24,8 @@ public class GameService {
     public List<moveDto> getValidMoves(int row, int col){
         Piece searchPiece =  board[row][col];
 
-        return List.of(new moveDto(0,0));
+        List<moveDto> validMoves = searchPiece.findMyMoves(board,row,col);
+        return validMoves;
     }
 
 

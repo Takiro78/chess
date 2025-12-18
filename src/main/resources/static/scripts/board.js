@@ -9,16 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const pieces = document.querySelectorAll(".piece");
-    console.log("dsflk");
+
 
     pieces.forEach(piece =>{
-        console.log("hell0");
+
         piece.addEventListener("click", () =>{
-            console.log("a click was noticed");
+
             const posClass = Array.from(piece.classList).find(cls =>cls.startsWith("pos-"));
 
             const square = document.querySelector(`.square.${posClass}`);
-
+            console.log("row:"+square.dataset.row+" col:"+square.dataset.col);
 
 
             // if square already clicked, reset it
