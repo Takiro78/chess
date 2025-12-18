@@ -1,35 +1,53 @@
-#board{
-    /*display:grid;*/
-    /*grid-template-columns:repeat(8, 100px);*/
-    /*grid-template-rows:repeat(8,100px);*/
-    width:800px;
-    height:800px;
-    position: relative
+#board {
+    width: 800px;
+    height: 800px;
+    position: relative;
+    border: 4px solid #333; /* subtle border around the board */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* soft drop shadow for depth */
 }
 
-.square{
+.square {
     height: 100px;
-    width:100px;
+    width: 100px;
     position: absolute;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5); /* inner border for squares */
+    transition: all 0.2s ease;
+    border-radius: 6px; /* slightly rounded corners for smoothness */
 }
 
+.white {
+    background: #f0d9b5; /* classic chess white */
+}
 
-
+.black {
+    background: #b58863; /* classic chess brown */
+}
 
 .selected {
-    box-shadow: inset 0 0 0 5px red;
+    box-shadow: inset 0 0 0 5px #ff4d4d, 0 0 10px rgba(255, 0, 0, 0.5); /* red highlight + glow */
 }
 
+.square.canBeMovedTo {
+    filter: none; /* remove previous filter */
+    background-color: rgba(95, 167, 127, 0.6); /* subtle green highlight */
+    box-shadow: inset 0 0 0 4px rgba(0, 107, 96, 0.8), 0 0 10px rgba(0, 255, 0, 0.3);
+}
 
-.white{ background: #ffdddd}
-.black{ background: black}
+.square.canBeMovedTo:hover{
+    filter: brightness(65%);
+}
 
-.piece{
-    width:100px;
-    height:100px;
+.piece {
+    width: 100px;
+    height: 100px;
     object-fit: contain;
-    /*pointer-events: none;*/
-    /*grid-row-start:auto;*/
-    /*grid-column-start: auto;*/
-    /*padding:2px;*/
+    cursor: pointer; /* makes it feel interactive */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    pointer-events: none;
 }
+
+/*.piece:hover {*/
+/*    transform: scale(1.05);*/
+/*    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); !* slight hover shadow for pieces *!*/
+/*}*/
