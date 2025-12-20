@@ -25,6 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const piece = document.querySelector(`.piece.${posClass}`);
             console.log("row:"+square.dataset.row+" col:"+square.dataset.col);
 
+            //check if sqaure is canbemovedto
+
+            if (square.classList.contains("canBeMovedTo") && currentSquare !=null){
+                console.log("it can move here");
+                isValidAndMove(currentSquare.dataset.row,currentSquare.dataset.col,square.dataset.row,square.dataset.col)
+
+                //need server to check if valid
+            }
+
+
             if(piece) {
                 // if square already clicked, reset it
                 if (currentSquare) {
@@ -73,4 +83,54 @@ async function fetchAndShowMoves(row,col){
     catch(error){
         console.log(error);
     }
+}
+
+async function isValidAndMove(pieceX,pieceY,moveX,moveY){
+    try{
+        const response = await fetch(`/game/isValidAndMove`,{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({pieceX,pieceY,moveX,moveY})
+        });
+
+        if (!response.ok){
+            throw new Error("could not fetch if valid move")
+
+        }
+
+        const data = await response.json();
+        console.log(data);
+        if (data){
+            move(pieceX,pieceY,moveX,moveY);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+function move(pieceX,pieceY,moveX,moveY){
+
+    console.log(`piece.pos-${pieceX}${pieceY}`);
+
+    //find piece to move
+    const pieceToMove = document.querySelector(`.piece.pos-${pieceX}${pieceY}`);
+
+
+    //check for piece to remove
+    const enemy = document.querySelector(`.piece.pos-${moveX}${moveY}`);
+    if (enemy){
+        enemy.remove();
+
+    }
+
+    //undo selected ui stuff
+    document.querySelector(`.selected`).classList.remove("selected")
+    document.querySelectorAll(".square.canBeMovedTo").forEach(sq => sq.classList.remove("canBeMovedTo"));
+
+    // console.log(pieceToMove);
+
+
+    pieceToMove.classList.remove(`pos-${pieceX}${pieceY}`);
+    pieceToMove.classList.add(`pos-${moveX}${moveY}`);
+
 }

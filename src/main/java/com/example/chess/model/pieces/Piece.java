@@ -69,4 +69,17 @@ public abstract class Piece {
         return piece.color == this.color;
     }
 
+    public boolean isValid(Piece[][] board ,int moveRow, int moveCol, int pieceX, int pieceY){
+
+        List<moveDto> moves = this.findMyMoves(board, pieceX, pieceY);
+
+        for (moveDto move: moves){
+//            System.out.println(move.toString());
+            if (move.getRow() == moveRow && move.getCol() == moveCol){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
