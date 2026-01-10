@@ -1,6 +1,10 @@
 
 console.log("board.js loaded");
 
+const gameId = window.location.pathname.split("/").pop();
+let currentTurn="WHITE";
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
     //all squares,
@@ -9,13 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
     //current square selected, player wants to move piece on this square
     let currentSquare=null;
 
-    let currentTurn="WHITE";
+
 
 
     //all pieces
     // const pieces = document.querySelectorAll(".piece");
 
-
+    // fore each square, listen for click
     squares.forEach(square =>{
 
         square.addEventListener("click", () =>{
@@ -61,9 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+
+//--------------------------find possible moves--------------//
 async function fetchAndShowMoves(row,col){
     try{
-        const response = await fetch(`/game/getMoves/${row}/${col}`);
+        const response = await fetch(`/game/${gameId}/getMoves/${row}/${col}`);
 
         if(!response.ok){
             throw new Error("could not fetch moves");
@@ -85,9 +91,12 @@ async function fetchAndShowMoves(row,col){
     }
 }
 
+
+
+//--------------------------check piece and move it probably----//
 async function isValidAndMove(pieceX,pieceY,moveX,moveY){
     try{
-        const response = await fetch(`/game/isValidAndMove`,{
+        const response = await fetch(`/game/${gameId}/isValidAndMove`,{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({pieceX,pieceY,moveX,moveY})
@@ -108,6 +117,9 @@ async function isValidAndMove(pieceX,pieceY,moveX,moveY){
         console.log(error);
     }
 }
+
+
+//-----------------------method to move piece probably------------//
 function move(pieceX,pieceY,moveX,moveY){
 
     console.log(`piece.pos-${pieceX}${pieceY}`);

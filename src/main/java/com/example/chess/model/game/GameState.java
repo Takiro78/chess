@@ -1,4 +1,4 @@
-package com.example.chess.service;
+package com.example.chess.model.game;
 
 import com.example.chess.ChessApplication;
 import com.example.chess.dto.PieceDto;
@@ -11,16 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GameService {
+public class GameState {
 
     public Piece[][] board = new Piece[8][8];
     public Color turn =  Color.WHITE;
 
     public ArrayList<Piece> Pieces = new ArrayList<>();
-    
-    
-    public GameService() {
 
+
+    public GameState() {
         Pieces.add(new Rook(0,0, Color.BLACK));
         Pieces.add(new Knight(0,1,Color.BLACK));
         Pieces.add(new Bishop(0,2,Color.BLACK));
@@ -60,7 +59,7 @@ public class GameService {
         Pieces.add(new Pawn(6, 5, Color.WHITE));
         Pieces.add(new Pawn(6, 6, Color.WHITE));
         Pieces.add(new Pawn(6, 7, Color.WHITE));
-        
+
         for(Piece p : Pieces){
             board[p.getRow()][p.getColumn()] = p;
         }
@@ -100,7 +99,7 @@ public class GameService {
         for (Piece[] row : board){
             for (Piece p : row) {
                 if(p != null){
-                pieceDTOs.add(createDTO(p));}
+                    pieceDTOs.add(createDTO(p));}
             }
         }
         return pieceDTOs;
