@@ -89,9 +89,18 @@ public class GameState {
 
 //        move piece
         if (canMove) {
+            //check if piece is pawn, check if pawn moves diagnolly, check if destingation empty, if yes then en passant
+            if (pieceToMove instanceof Pawn && moveY != pieceY && board[moveX][moveY] == null) {
+                Pieces.remove(board[pieceX][moveY]);
+                board[pieceX][moveY] = null;
+
+            }
+
+
             pieceToMove.setColumn(moveY);
             pieceToMove.setRow(moveX);
             board[moveX][moveY] = board[pieceX][pieceY];
+            Pieces.remove(board[pieceX][pieceY]);
             board[pieceX][pieceY] = null;
         }
         pieceToMove.findMyMoves(board);

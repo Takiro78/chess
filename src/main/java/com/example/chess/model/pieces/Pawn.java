@@ -10,6 +10,7 @@ import java.util.List;
 public class Pawn extends Piece {
 
     private boolean hasMoved = false;
+    private boolean enPassant = false;
     public Pawn(int r, int c, Color color) {
         super(r, c, color);
         setPath();
@@ -39,29 +40,52 @@ public class Pawn extends Piece {
             }
         }
 
-        //--------check right take-------
+        //--------check right side-------
         //check if on edge
         if(column+1 <8) {
+            //normal take
             //check look for piece to take
             if (board[row + moveDirection][column + 1] != null && board[row + moveDirection][column + 1].color != this.color) {
                 moves.add(new moveDto(row + moveDirection, column + 1));
             }
+            else {
+                //en passant
+                Piece side = board[row][column + 1];
+                if (side instanceof Pawn && side.color != this.color && ((Pawn) side).enPassant) {
+                    moves.add(new moveDto(row + moveDirection, column + 1));
+                }
+            }
         }
 
-        //-------------check left take---------------
+        //-------------check left side---------------
         //check if on edge
         if(column-1 >= 0) {
+            //normal take
             //look for piece to take
             if (board[row + moveDirection][column - 1] != null && board[row + moveDirection][column - 1].color != this.color) {
                 moves.add(new moveDto(row+moveDirection, column - 1));
             }
+
+            else {
+                //en passant
+                Piece side = board[row][column - 1];
+                if (side instanceof Pawn && side.color != this.color && ((Pawn) side).enPassant) {
+                    moves.add(new moveDto(row + moveDirection, column - 1));
+                }
+            }
         }
+
+
+
+
 
         this.moves =moves;
     }
 
     @Override
     public boolean isValid(Piece[][] board ,int moveRow, int moveCol, int pieceX, int pieceY){
+        enPassant = !hasMoved;
+
         hasMoved = true;
         return super.isValid(board, moveRow, moveCol, pieceX, pieceY);
     }
