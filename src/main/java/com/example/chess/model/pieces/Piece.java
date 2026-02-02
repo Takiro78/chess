@@ -22,6 +22,9 @@ public abstract class Piece {
     @Getter
     protected String imgPath;
 
+    @Getter
+    protected List<moveDto> moves;
+
     protected  int[][] getOffsets(){
         return new int[][]{};
     }
@@ -38,12 +41,12 @@ public abstract class Piece {
         imgPath = "/pieces/pixel_chess/pieces/"+color.toString()+"_"+this.getClass().getSimpleName()+".png";
     }
 
-    public  List<moveDto> findMyMoves(Piece[][] board, int row, int col){
+    public void  findMyMoves(Piece[][] board){
         List<moveDto> validMoves = new ArrayList<>();
 
         for (int[] offset: getOffsets()){
             int  moveRow = row + offset[0];
-            int moveCol = col + offset[1];
+            int moveCol = column + offset[1];
 
             if (inbounds(moveRow, moveCol)){
                 if (isFriend(board[moveRow][moveCol])){
@@ -55,7 +58,7 @@ public abstract class Piece {
             }
         }
         System.out.println(validMoves);
-        return validMoves;
+        moves = validMoves;
     }
 
     public boolean inbounds(int moveRow, int moveCol) {
@@ -71,7 +74,7 @@ public abstract class Piece {
 
     public boolean isValid(Piece[][] board ,int moveRow, int moveCol, int pieceX, int pieceY){
 
-        List<moveDto> moves = this.findMyMoves(board, pieceX, pieceY);
+
 
         for (moveDto move: moves){
 //            System.out.println(move.toString());

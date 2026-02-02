@@ -13,51 +13,57 @@ public class Pawn extends Piece {
     public Pawn(int r, int c, Color color) {
         super(r, c, color);
         setPath();
-        boolean hasMoved = false;
+
     }
 
     // do en passant later
     @Override
-    public List<moveDto> findMyMoves(Piece[][] board, int row, int col){
+    public void findMyMoves(Piece[][] board){
         List<moveDto> moves = new ArrayList<>();
 
         int moveDirection =-1;
         if (color == Color.BLACK){moveDirection = 1;}
 
         //check if piece in front of pawn, if there is no piece, add coordinate
-        if (board[row+moveDirection][col] == null){
-            moves.add(new moveDto(row+moveDirection, col));
-            hasMoved = true;
+        if (board[row+moveDirection][column] == null) {
+            moves.add(new moveDto(row + moveDirection, column));
 
-        }
-        // piece hasnt move yet
-        if (! hasMoved){
-            //check if there is piece 2 sqaures in front, if not, add coordinates
-            if (board[row+(2*moveDirection)][col] == null){
-                moves.add(new moveDto(row+(2*moveDirection), col));
+
+            // piece hasnt move yet
+            if (!hasMoved) {
+                //check if there is piece 2 sqaures in front, if not, add coordinates
+                if (board[row + (2 * moveDirection)][column] == null) {
+                    moves.add(new moveDto(row + (2 * moveDirection), column));
+
+                }
             }
         }
 
         //--------check right take-------
         //check if on edge
-        if(col+1 <8) {
+        if(column+1 <8) {
             //check look for piece to take
-            if (board[row + moveDirection][col + 1] != null && board[row + moveDirection][col + 1].color != this.color) {
-                moves.add(new moveDto(row + moveDirection, col + 1));
+            if (board[row + moveDirection][column + 1] != null && board[row + moveDirection][column + 1].color != this.color) {
+                moves.add(new moveDto(row + moveDirection, column + 1));
             }
         }
 
         //-------------check left take---------------
         //check if on edge
-        if(col-1 >= 0) {
+        if(column-1 >= 0) {
             //look for piece to take
-            if (board[row + moveDirection][col - 1] != null && board[row + moveDirection][col - 1].color != this.color) {
-                moves.add(new moveDto(row+moveDirection, col - 1));
+            if (board[row + moveDirection][column - 1] != null && board[row + moveDirection][column - 1].color != this.color) {
+                moves.add(new moveDto(row+moveDirection, column - 1));
             }
         }
 
-        return moves;
+        this.moves =moves;
     }
 
+    @Override
+    public boolean isValid(Piece[][] board ,int moveRow, int moveCol, int pieceX, int pieceY){
+        hasMoved = true;
+        return super.isValid(board, moveRow, moveCol, pieceX, pieceY);
+    }
 
 }

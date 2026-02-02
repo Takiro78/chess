@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    public int[][] directions = new int[][]{
+    public final int[][] directions = new int[][]{
             {1,-1},
             {1,1},
             {-1,-1},
@@ -19,14 +19,14 @@ public class Bishop extends Piece {
         setPath();
     }
 
-    public List<moveDto> findMyMoves(Piece[][] board, int row, int col){
+    public void findMyMoves(Piece[][] board){
 
         List<moveDto> moves = new ArrayList<>();
 
         for(int[] dir: directions){
 
             int moveRow = row + dir[0];
-            int moveCol = col + dir[1];
+            int moveCol = column + dir[1];
 
             while (inbounds(moveRow, moveCol)) {
                 Piece piece = board[moveRow][moveCol];
@@ -44,6 +44,6 @@ public class Bishop extends Piece {
 
             }
         }
-        return moves;
+        this.moves = moves;
     }
 }

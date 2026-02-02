@@ -70,7 +70,7 @@ public class GameService {
         Piece searchPiece =  board[row][col];
         System.out.println(searchPiece);
 
-        List<moveDto> validMoves = searchPiece.findMyMoves(board,row,col);
+        List<moveDto> validMoves = searchPiece.getMoves();
         return validMoves;
     }
 

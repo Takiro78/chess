@@ -62,15 +62,20 @@ public class GameState {
 
         for(Piece p : Pieces){
             board[p.getRow()][p.getColumn()] = p;
+
+
         }
+
+        //tell each piece to find its current available moves
+
     }
 
     public List<moveDto> getValidMoves(int row, int col){
         Piece searchPiece =  board[row][col];
         System.out.println(searchPiece);
-
-        List<moveDto> validMoves = searchPiece.findMyMoves(board,row,col);
-        return validMoves;
+        searchPiece.findMyMoves(board);
+//        List<moveDto> validMoves = searchPiece.getMoves();
+        return searchPiece.getMoves();
     }
 
     public boolean isValidAndMove(int pieceX,int pieceY,int moveX,int moveY){
@@ -89,7 +94,7 @@ public class GameState {
             board[moveX][moveY] = board[pieceX][pieceY];
             board[pieceX][pieceY] = null;
         }
-
+        pieceToMove.findMyMoves(board);
         return canMove;
     }
 

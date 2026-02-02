@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Rook extends Piece {
 
-    private int[][] directions =  new int[][]{
+    private final int[][] directions =  new int[][]{
             {0,1},
             {0,-1},
             {1,0},
@@ -19,13 +19,13 @@ public class Rook extends Piece {
         super(r, c, color);
         setPath();
     }
-
-    public List<moveDto> findMyMoves(Piece[][] board, int row, int col){
+    @Override
+    public void findMyMoves(Piece[][] board){
 
         List<moveDto> validMoves = new ArrayList<>();
         for (int[] dir: directions){
             int moveRow = row + dir[0];
-            int moveCol = col + dir[1];
+            int moveCol = column + dir[1];
 
             while(inbounds(moveRow, moveCol)){
 
@@ -44,6 +44,6 @@ public class Rook extends Piece {
             }
         }
 
-        return validMoves;
+        moves =validMoves;
     }
 }
