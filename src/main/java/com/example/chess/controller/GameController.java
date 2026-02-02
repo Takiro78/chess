@@ -3,6 +3,7 @@ package com.example.chess.controller;
 import com.example.chess.dto.PieceDto;
 import com.example.chess.dto.doubleMoveDto;
 import com.example.chess.dto.moveDto;
+import com.example.chess.model.game.GameState;
 import com.example.chess.model.pieces.Piece;
 import com.example.chess.service.GameManager;
 import com.example.chess.service.GameService;
@@ -45,7 +46,11 @@ public class GameController {
     //helper method that allows url to have id and gives pieces to game
     @RequestMapping("/game/{gameId}")
     public String game(@PathVariable String gameId, Model model){
-        model.addAttribute("pieces",gameManager.getGameState(gameId).getAllPieces());
+        GameState id = gameManager.getGameState(gameId);
+        if(id == null){
+            return "redirect:/game";
+        }
+        model.addAttribute("pieces",id.getAllPieces());
         return "game";
     }
     //---------------------------------------------------------------//

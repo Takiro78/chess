@@ -13,6 +13,7 @@ public class Pawn extends Piece {
     public Pawn(int r, int c, Color color) {
         super(r, c, color);
         setPath();
+        boolean hasMoved = false;
     }
 
     // do en passant later
@@ -26,7 +27,15 @@ public class Pawn extends Piece {
         //check if piece in front of pawn, if there is no piece, add coordinate
         if (board[row+moveDirection][col] == null){
             moves.add(new moveDto(row+moveDirection, col));
+            hasMoved = true;
 
+        }
+        // piece hasnt move yet
+        if (! hasMoved){
+            //check if there is piece 2 sqaures in front, if not, add coordinates
+            if (board[row+(2*moveDirection)][col] == null){
+                moves.add(new moveDto(row+(2*moveDirection), col));
+            }
         }
 
         //--------check right take-------
