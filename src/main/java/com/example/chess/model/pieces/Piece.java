@@ -25,6 +25,9 @@ public abstract class Piece {
     @Getter
     protected List<moveDto> moves;
 
+    protected boolean hasMoved = false;
+
+
     protected  int[][] getOffsets(){
         return new int[][]{};
     }
@@ -74,7 +77,7 @@ public abstract class Piece {
 
     public boolean isValid(Piece[][] board ,int moveRow, int moveCol, int pieceX, int pieceY){
 
-
+        hasMoved = true;
 
         for (moveDto move: moves){
 //            System.out.println(move.toString());

@@ -84,6 +84,10 @@ public class GameState {
         Piece pieceToMove = board[pieceX][pieceY];
         System.out.println("pieceToMove: " + pieceToMove);
 
+        //if piece not current turn
+        if (pieceToMove.getColor() != this.turn){
+            return false;
+        }
         //find if coordinates are valid move
         boolean canMove = pieceToMove.isValid(board,moveX,moveY, pieceX,pieceY);
 
@@ -104,6 +108,7 @@ public class GameState {
             board[pieceX][pieceY] = null;
         }
         pieceToMove.findMyMoves(board);
+        this.turn =(this.turn ==Color.WHITE) ? Color.BLACK : Color.WHITE;
         return canMove;
     }
 

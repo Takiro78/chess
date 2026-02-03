@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    private boolean hasMoved = false;
     private boolean enPassant = false;
     public Pawn(int r, int c, Color color) {
         super(r, c, color);
@@ -86,7 +85,7 @@ public class Pawn extends Piece {
     public boolean isValid(Piece[][] board ,int moveRow, int moveCol, int pieceX, int pieceY){
         enPassant = !hasMoved;
 
-        hasMoved = true;
+
         return super.isValid(board, moveRow, moveCol, pieceX, pieceY);
     }
 
