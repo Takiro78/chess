@@ -23,12 +23,17 @@ public class Rook extends Piece {
     public List<moveDto> findMyMoves(Piece[][] board,int row, int column){
 
         List<moveDto> validMoves = new ArrayList<>();
+        //loop tthrough up down left and right
         for (int[] dir: directions){
+
+            //adjacent square
             int moveRow = row + dir[0];
             int moveCol = column + dir[1];
 
+            //while current square is on board
             while(inbounds(moveRow, moveCol)){
 
+                //current square is empty
                 if(board[moveRow][moveCol] == null){
                     validMoves.add(new moveDto(moveRow, moveCol));
 

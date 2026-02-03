@@ -1,6 +1,5 @@
 package com.example.chess.model.game;
 
-import com.example.chess.ChessApplication;
 import com.example.chess.dto.PieceDto;
 import com.example.chess.dto.moveDto;
 import com.example.chess.model.Color;
@@ -13,16 +12,16 @@ import java.util.List;
 @Service
 public class GameState {
 
-    public Piece[][] board = new Piece[8][8];
+    private Piece[][] board = new Piece[8][8];
     public Piece[][] tempBoard = new Piece[8][8];
 
     public Color turn =  Color.WHITE;
 
-    private King bKing = new King(0,4,Color.BLACK);
-    private King wKing = new King(7,4,Color.WHITE);
+    private final King bKing = new King(0,4,Color.BLACK);
+    private final King wKing = new King(7,4,Color.WHITE);
 
-    public ArrayList<Piece> wPieces = new ArrayList<>();
-    public ArrayList<Piece> bPieces = new ArrayList<>();
+    public static ArrayList<Piece> wPieces = new ArrayList<>();
+    public static ArrayList<Piece> bPieces = new ArrayList<>();
 
 
     public GameState() {
@@ -66,15 +65,10 @@ public class GameState {
         wPieces.add(new Pawn(6, 6, Color.WHITE));
         wPieces.add(new Pawn(6, 7, Color.WHITE));
 
-        for(Piece p : wPieces){
-            board[p.getRow()][p.getColumn()] = p;
-            tempBoard[p.getRow()][p.getColumn()] = p;
-        }
 
-        for(Piece p : bPieces){
-            board[p.getRow()][p.getColumn()] = p;
-            tempBoard[p.getRow()][p.getColumn()] = p;
-        }
+        //intialize boards
+        this.resetBoard(board);
+        this.resetBoard(tempBoard);
 
         //tell each piece to find its current available moves
 
@@ -147,14 +141,19 @@ public class GameState {
         );
     }
 
-    public boolean isKingInCheck(King king, Piece[][]board){
+    public static boolean isKingInCheck(King king, Piece[][]board){
+
+        //get enemy pieces
         ArrayList<Piece> enemy;
         if (king.getColor() ==Color.WHITE){ enemy = bPieces;}
         else{enemy = wPieces;}
 
         //loop trhough enemies
         for (Piece piece : enemy){
+            //get moves for current piece
             List<moveDto> moves = piece.findMyMoves(board, piece.getRow(), piece.getColumn());
+
+            //check moves to see if enemy can now take friendly king
             for (moveDto m : moves){
                 if (m.getCol() == piece.getColumn() && m.getRow() == piece.getRow()){
                     return true;
@@ -164,6 +163,24 @@ public class GameState {
 
 
         return false;
+    }
+
+    public  void resetBoard(Piece[][] board){
+        for(Piece p : wPieces){
+            board[p.getRow()][p.getColumn()] = p;
+        }
+
+        for(Piece p : bPieces){
+            board[p.getRow()][p.getColumn()] = p;
+        }
+
+    }
+
+    public static Piece[][] movePieceOnBoard(Piece[][] board, int pieceRow, int pieceCol, int moveRow, int moveCol){
+
+
+
+        return null;
     }
 
 }
