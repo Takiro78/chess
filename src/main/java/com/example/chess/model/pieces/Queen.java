@@ -24,7 +24,7 @@ public class Queen extends  Piece {
     }
 
     @Override
-    public void findMyMoves(Piece[][] board){
+    public List<moveDto> findMyMoves(Piece[][] board, int row, int column) {
         List<moveDto> moves = new ArrayList<>();
 
         for(int[] dir: directions){
@@ -48,7 +48,7 @@ public class Queen extends  Piece {
 
             }
         }
-        this.moves = moves;
+        return moves;
     }
 }
 

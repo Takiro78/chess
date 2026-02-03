@@ -20,7 +20,7 @@ public class Rook extends Piece {
         setPath();
     }
     @Override
-    public void findMyMoves(Piece[][] board){
+    public List<moveDto> findMyMoves(Piece[][] board,int row, int column){
 
         List<moveDto> validMoves = new ArrayList<>();
         for (int[] dir: directions){
@@ -44,6 +44,6 @@ public class Rook extends Piece {
             }
         }
 
-        moves =validMoves;
+        return validMoves;
     }
 }

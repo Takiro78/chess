@@ -19,7 +19,7 @@ public class Bishop extends Piece {
         setPath();
     }
 
-    public void findMyMoves(Piece[][] board){
+    public List<moveDto> findMyMoves(Piece[][] board, int row, int column){
 
         List<moveDto> moves = new ArrayList<>();
 
@@ -44,6 +44,6 @@ public class Bishop extends Piece {
 
             }
         }
-        this.moves = moves;
+        return moves;
     }
 }

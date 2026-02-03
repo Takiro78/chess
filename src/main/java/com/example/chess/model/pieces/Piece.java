@@ -44,7 +44,7 @@ public abstract class Piece {
         imgPath = "/pieces/pixel_chess/pieces/"+color.toString()+"_"+this.getClass().getSimpleName()+".png";
     }
 
-    public void  findMyMoves(Piece[][] board){
+    public List<moveDto>  findMyMoves(Piece[][] board, int row, int column){
         List<moveDto> validMoves = new ArrayList<>();
 
         for (int[] offset: getOffsets()){
@@ -61,7 +61,11 @@ public abstract class Piece {
             }
         }
         System.out.println(validMoves);
-        moves = validMoves;
+        return validMoves;
+    }
+
+    public void findAndSetMoves(Piece[][] board, int row, int column){
+        this.moves = findMyMoves(board, row, column);
     }
 
     public boolean inbounds(int moveRow, int moveCol) {

@@ -18,7 +18,7 @@ public class Pawn extends Piece {
 
     // do en passant later
     @Override
-    public void findMyMoves(Piece[][] board){
+    public List<moveDto> findMyMoves(Piece[][] board, int row, int column) {
         List<moveDto> moves = new ArrayList<>();
 
         int moveDirection =-1;
@@ -78,7 +78,7 @@ public class Pawn extends Piece {
 
 
 
-        this.moves =moves;
+        return moves;
     }
 
     @Override
