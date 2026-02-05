@@ -164,6 +164,17 @@ public class GameState {
 
         //loop trhough enemies
         for (Piece piece : enemy){
+
+
+
+            int row = piece.getRow();
+            int column = piece.getColumn();
+            //prevent iterating over pieces not on board anymore
+            if (board[row][column] != piece){
+                continue;
+            }
+
+
             //get moves for current piece
             List<moveDto> moves = piece.findMyMoves(board, piece.getRow(), piece.getColumn());
 
