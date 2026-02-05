@@ -2,7 +2,7 @@ package com.example.chess.dto;
 
 import lombok.Getter;
 
-public class PieceMoveDTO {
+public class PieceMoveDto {
 
     @Getter
     private int pieceX;

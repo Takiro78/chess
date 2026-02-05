@@ -1,6 +1,6 @@
 package com.example.chess.controller;
 
-import com.example.chess.dto.PieceMoveDTO;
+import com.example.chess.dto.PieceMoveDto;
 import com.example.chess.dto.moveDto;
 import com.example.chess.model.game.GameState;
 import com.example.chess.service.GameManager;
@@ -32,7 +32,7 @@ public class GameController {
 
     //----------------------------------open new game---------------//
     //create new game and redirect to page that has game id in url
-    @RequestMapping("/game")
+    @RequestMapping({"/game","/game/"})
     public String createGame(Model model) {
         String id = gameManager.createGame();
 
@@ -49,6 +49,7 @@ public class GameController {
         model.addAttribute("pieces",id.getAllPieces());
         return "game";
     }
+
     //---------------------------------------------------------------//
 
 
@@ -64,7 +65,7 @@ public class GameController {
 
     @ResponseBody
     @PostMapping("/game/{gameId}/isValidAndMove")
-    public boolean isValidAndMove(@PathVariable String gameId,@RequestBody PieceMoveDTO move) {
+    public boolean isValidAndMove(@PathVariable String gameId,@RequestBody PieceMoveDto move) {
         System.out.println("piece move initiated");
 //        System.out.println(move.getPieceX()+" "+move.getPieceY());
         return gameManager.getGameState(gameId).isValidAndMove(move.getPieceX(),move.getPieceY(),move.getMoveX(),move.getMoveY());

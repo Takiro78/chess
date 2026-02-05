@@ -49,12 +49,12 @@ public class GameState {
 
 
         wPieces.add(new Rook(7, 0, Color.WHITE));
-        wPieces.add(new Knight(7, 1, Color.WHITE));
-        wPieces.add(new Bishop(7, 2, Color.WHITE));
-        wPieces.add(new Queen(7, 3, Color.WHITE));
+//        wPieces.add(new Knight(7, 1, Color.WHITE));
+//        wPieces.add(new Bishop(7, 2, Color.WHITE));
+//        wPieces.add(new Queen(7, 3, Color.WHITE));
         wPieces.add(wKing);
-        wPieces.add(new Bishop(7, 5, Color.WHITE));
-        wPieces.add(new Knight(7, 6, Color.WHITE));
+//        wPieces.add(new Bishop(7, 5, Color.WHITE));
+//        wPieces.add(new Knight(7, 6, Color.WHITE));
         wPieces.add(new Rook(7, 7, Color.WHITE));
 
         wPieces.add(new Pawn(6, 0, Color.WHITE));
@@ -119,6 +119,27 @@ public class GameState {
             if (pieceToMove instanceof Pawn && moveY != pieceY && board[moveX][moveY] == null) {
 //                Pieces.remove(board[pieceX][moveY]);
                 board[pieceX][moveY] = null;
+
+            }
+
+            if (pieceToMove instanceof King ){
+
+                if (moveY == pieceY + 2) {
+                    // move rook from h-file to f-file
+                    Piece rook = board[pieceX][7];
+                    board[pieceX][5] = rook;
+                    rook.setColumn(5);
+                    board[pieceX][7] = null;
+                }
+
+                // queen side castle (white: e1 -> c1, black: e8 -> c8)
+                else if (moveY == pieceY - 2) {
+                    // move rook from a-file to d-file
+                    Piece rook = board[pieceX][0];
+                    board[pieceX][3] = rook;
+                    rook.setColumn(3);
+                    board[pieceX][0] = null;
+                }
 
             }
 
