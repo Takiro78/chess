@@ -212,34 +212,43 @@ public class GameState {
     public  List<moveDto> simulateMoves(Piece p, List<moveDto> moves){
         int row = p.getRow();
         int col = p.getColumn();
-        System.out.println("before moves: " + moves);
+//        System.out.println("before moves: " + moves);
+
+        //find out who is friendly king for check check
         King king = ( p.getColor() == Color.WHITE) ? wKing : bKing;
+
+        //loop through current pieces possible moves to simulate
         for (int i = moves.size()-1; i>=0; i--){
             int moveRow = moves.get(i).getRow();
             int moveCol = moves.get(i).getCol();
 
-            System.out.println("move row: " + moveRow + " col: " + moveCol);
-            System.out.println(p.getRow() + "pRow " + p.getColumn() + "col " );
+//            System.out.println("move row: " + moveRow + " col: " + moveCol);
+//            System.out.println(p.getRow() + "pRow " + p.getColumn() + "col " );
 
+            //simulate move
             tempBoard [moveRow][moveCol] = p;
             p.setRow(moveRow);
             p.setColumn(moveCol);
             tempBoard[row][col] = null;
 
-
+            //check check
             if (isKingInCheck(king,tempBoard)){
                 moves.remove(i);
             }
 
+            //reset board
             tempBoard = resetBoard();
-            p.setRow(row);
-            p.setColumn(col);
+
 
 
 
 
         }
-        System.out.println("after moves: " + moves);
+        //reset piece's position
+        p.setRow(row);
+        p.setColumn(col);
+
+//        System.out.println("after moves: " + moves);
         return moves;
     }
 

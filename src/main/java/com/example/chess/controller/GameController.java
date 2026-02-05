@@ -1,19 +1,15 @@
 package com.example.chess.controller;
 
-import com.example.chess.dto.PieceDto;
-import com.example.chess.dto.doubleMoveDto;
+import com.example.chess.dto.PieceMoveDTO;
 import com.example.chess.dto.moveDto;
 import com.example.chess.model.game.GameState;
-import com.example.chess.model.pieces.Piece;
 import com.example.chess.service.GameManager;
-import com.example.chess.service.GameService;
 import com.example.chess.service.PieceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -68,7 +64,7 @@ public class GameController {
 
     @ResponseBody
     @PostMapping("/game/{gameId}/isValidAndMove")
-    public boolean isValidAndMove(@PathVariable String gameId,@RequestBody doubleMoveDto move) {
+    public boolean isValidAndMove(@PathVariable String gameId,@RequestBody PieceMoveDTO move) {
         System.out.println("piece move initiated");
 //        System.out.println(move.getPieceX()+" "+move.getPieceY());
         return gameManager.getGameState(gameId).isValidAndMove(move.getPieceX(),move.getPieceY(),move.getMoveX(),move.getMoveY());
