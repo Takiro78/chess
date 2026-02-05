@@ -268,11 +268,11 @@ public class GameState {
             List<moveDto> pMoves = searchPiece.findMyMoves(board, searchPiece.getRow(), searchPiece.getColumn());
             //simulate moves
 
-            if (!simulateMoves(searchPiece,pMoves).isEmpty()){
-                return false;
+            if (simulateMoves(searchPiece,pMoves).isEmpty()){
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 }
