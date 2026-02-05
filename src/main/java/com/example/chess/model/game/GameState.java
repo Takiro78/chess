@@ -49,12 +49,12 @@ public class GameState {
 
 
         wPieces.add(new Rook(7, 0, Color.WHITE));
-//        wPieces.add(new Knight(7, 1, Color.WHITE));
-//        wPieces.add(new Bishop(7, 2, Color.WHITE));
-//        wPieces.add(new Queen(7, 3, Color.WHITE));
+        wPieces.add(new Knight(7, 1, Color.WHITE));
+        wPieces.add(new Bishop(7, 2, Color.WHITE));
+        wPieces.add(new Queen(7, 3, Color.WHITE));
         wPieces.add(wKing);
-//        wPieces.add(new Bishop(7, 5, Color.WHITE));
-//        wPieces.add(new Knight(7, 6, Color.WHITE));
+        wPieces.add(new Bishop(7, 5, Color.WHITE));
+        wPieces.add(new Knight(7, 6, Color.WHITE));
         wPieces.add(new Rook(7, 7, Color.WHITE));
 
         wPieces.add(new Pawn(6, 0, Color.WHITE));
