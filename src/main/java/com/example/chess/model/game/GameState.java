@@ -244,17 +244,16 @@ public class GameState {
                 moves.remove(i);
             }
 
+            //reset piece's position
+            p.setRow(row);
+            p.setColumn(col);
+
             //reset board
             tempBoard = resetBoard();
 
 
-
-
-
         }
-        //reset piece's position
-        p.setRow(row);
-        p.setColumn(col);
+
 
 //        System.out.println("after moves: " + moves);
         return moves;

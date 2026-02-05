@@ -62,7 +62,7 @@ public abstract class Piece {
 
             }
         }
-        System.out.println(validMoves);
+//        System.out.println(validMoves);
         return validMoves;
     }
 
