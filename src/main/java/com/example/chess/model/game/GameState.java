@@ -86,6 +86,11 @@ public class GameState {
         Piece searchPiece =  board[row][col];
         System.out.println(searchPiece);
 
+        //stop player from looking at moves when not their turn
+        if (searchPiece.getColor() != turn){
+            return null;
+        }
+
         //get valid moves
         List<moveDto> pMoves = searchPiece.findMyMoves(board, row, col);
         //simulate moves
