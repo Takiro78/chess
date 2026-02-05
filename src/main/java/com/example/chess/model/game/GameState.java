@@ -7,6 +7,7 @@ import com.example.chess.model.pieces.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -67,10 +68,16 @@ public class GameState {
 
 
         //intialize boards
-        this.resetBoard(board);
-        this.resetBoard(tempBoard);
+        for (Piece p: wPieces){
+            board[p.getRow()][p.getColumn()] = p;
+            tempBoard[p.getRow()][p.getColumn()] = p;
+        }
 
-        //tell each piece to find its current available moves
+        for (Piece p: bPieces){
+            board[p.getRow()][p.getColumn()] = p;
+            tempBoard[p.getRow()][p.getColumn()] = p;
+        }
+
 
     }
 
@@ -78,7 +85,12 @@ public class GameState {
     public List<moveDto> getValidMoves(int row, int col){
         Piece searchPiece =  board[row][col];
         System.out.println(searchPiece);
-        searchPiece.findAndSetMoves(board, row, col);
+
+        //get valid moves
+        List<moveDto> pMoves = searchPiece.findMyMoves(board, row, col);
+        //simulate moves
+        searchPiece.setMoves(simulateMoves(searchPiece,pMoves));
+
 //        List<moveDto> validMoves = searchPiece.getMoves();
         return searchPiece.getMoves();
     }
@@ -112,7 +124,7 @@ public class GameState {
 //            Pieces.remove(board[pieceX][pieceY]);
             board[pieceX][pieceY] = null;
         }
-        pieceToMove.findAndSetMoves(board,moveX,moveY);
+        pieceToMove.findMyMoves(board,moveX,moveY);
 
         this.turn =(this.turn ==Color.WHITE) ? Color.BLACK : Color.WHITE;
         return canMove;
@@ -141,12 +153,14 @@ public class GameState {
         );
     }
 
+    //checks if given king is in check in given board
     public static boolean isKingInCheck(King king, Piece[][]board){
 
         //get enemy pieces
-        ArrayList<Piece> enemy;
-        if (king.getColor() ==Color.WHITE){ enemy = bPieces;}
-        else{enemy = wPieces;}
+        ArrayList<Piece> enemy = (king.getColor() == Color.WHITE) ? bPieces : wPieces;
+
+
+
 
         //loop trhough enemies
         for (Piece piece : enemy){
@@ -155,7 +169,7 @@ public class GameState {
 
             //check moves to see if enemy can now take friendly king
             for (moveDto m : moves){
-                if (m.getCol() == piece.getColumn() && m.getRow() == piece.getRow()){
+                if (m.getCol() == king.getColumn() && m.getRow() == king.getRow()){
                     return true;
                 }
             }
@@ -165,22 +179,57 @@ public class GameState {
         return false;
     }
 
-    public  void resetBoard(Piece[][] board){
-        for(Piece p : wPieces){
+    public  Piece[][] resetBoard(){
+        Piece[][] board = new Piece[8][8];
+
+        for (Piece p: wPieces){
             board[p.getRow()][p.getColumn()] = p;
+
         }
 
-        for(Piece p : bPieces){
+        for (Piece p: bPieces){
             board[p.getRow()][p.getColumn()] = p;
+
         }
+
+        return board;
 
     }
 
-    public static Piece[][] movePieceOnBoard(Piece[][] board, int pieceRow, int pieceCol, int moveRow, int moveCol){
+
+
+    public  List<moveDto> simulateMoves(Piece p, List<moveDto> moves){
+        int row = p.getRow();
+        int col = p.getColumn();
+        System.out.println("before moves: " + moves);
+        King king = ( p.getColor() == Color.WHITE) ? wKing : bKing;
+        for (int i = moves.size()-1; i>=0; i--){
+            int moveRow = moves.get(i).getRow();
+            int moveCol = moves.get(i).getCol();
+
+            System.out.println("move row: " + moveRow + " col: " + moveCol);
+            System.out.println(p.getRow() + "pRow " + p.getColumn() + "col " );
+
+            tempBoard [moveRow][moveCol] = p;
+            p.setRow(moveRow);
+            p.setColumn(moveCol);
+            tempBoard[row][col] = null;
+
+
+            if (isKingInCheck(king,tempBoard)){
+                moves.remove(i);
+            }
+
+            tempBoard = resetBoard();
+            p.setRow(row);
+            p.setColumn(col);
 
 
 
-        return null;
+
+        }
+        System.out.println("after moves: " + moves);
+        return moves;
     }
 
 }

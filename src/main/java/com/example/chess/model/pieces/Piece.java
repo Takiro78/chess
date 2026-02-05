@@ -2,6 +2,7 @@ package com.example.chess.model.pieces;
 
 import com.example.chess.dto.moveDto;
 import com.example.chess.model.Color;
+import com.example.chess.model.game.GameState;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ public abstract class Piece {
     protected String imgPath;
 
     @Getter
+    @Setter
     protected List<moveDto> moves;
 
     protected boolean hasMoved = false;
@@ -64,9 +66,6 @@ public abstract class Piece {
         return validMoves;
     }
 
-    public void findAndSetMoves(Piece[][] board, int row, int column){
-        this.moves = findMyMoves(board, row, column);
-    }
 
     public boolean inbounds(int moveRow, int moveCol) {
         return moveRow >= 0 && moveRow < 8 && moveCol >= 0 && moveCol < 8;
@@ -91,5 +90,7 @@ public abstract class Piece {
         }
         return false;
     }
+
+
 
 }
