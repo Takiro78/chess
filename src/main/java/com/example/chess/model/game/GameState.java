@@ -21,8 +21,8 @@ public class GameState {
     private final King bKing = new King(0,4,Color.BLACK);
     private final King wKing = new King(7,4,Color.WHITE);
 
-    public static ArrayList<Piece> wPieces = new ArrayList<>();
-    public static ArrayList<Piece> bPieces = new ArrayList<>();
+    public  ArrayList<Piece> wPieces = new ArrayList<>();
+    public  ArrayList<Piece> bPieces = new ArrayList<>();
 
 
     public GameState() {
@@ -132,6 +132,9 @@ public class GameState {
         pieceToMove.findMyMoves(board,moveX,moveY);
 
         this.turn =(this.turn ==Color.WHITE) ? Color.BLACK : Color.WHITE;
+        if (isCheckmate( (this.turn ==Color.WHITE) ? wPieces : bPieces)){
+            System.out.println(turn + " is in checkmate");
+        }
         return canMove;
     }
 
@@ -159,7 +162,7 @@ public class GameState {
     }
 
     //checks if given king is in check in given board
-    public static boolean isKingInCheck(King king, Piece[][]board){
+    public  boolean isKingInCheck(King king, Piece[][]board){
 
         //get enemy pieces
         ArrayList<Piece> enemy = (king.getColor() == Color.WHITE) ? bPieces : wPieces;
@@ -255,6 +258,22 @@ public class GameState {
 
 //        System.out.println("after moves: " + moves);
         return moves;
+    }
+
+    public boolean isCheckmate(ArrayList<Piece> pieces){
+
+
+        for (Piece searchPiece: pieces){
+
+            //get valid moves
+            List<moveDto> pMoves = searchPiece.findMyMoves(board, searchPiece.getRow(), searchPiece.getColumn());
+            //simulate moves
+
+            if (!simulateMoves(searchPiece,pMoves).isEmpty()){
+                return false;
+            }
+        }
+        return true;
     }
 
 }
