@@ -49,7 +49,11 @@ public abstract class Piece {
     public List<moveDto>  findMyMoves(Piece[][] board, int row, int column){
         List<moveDto> validMoves = new ArrayList<>();
 
+        System.out.println("      - Test");
+
         for (int[] offset: getOffsets()){
+            System.out.println("    - " +offset[0]+" "+offset[1]);
+
             int  moveRow = row + offset[0];
             int moveCol = column + offset[1];
 
@@ -91,6 +95,8 @@ public abstract class Piece {
         return false;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "♟️";
+    }
 }

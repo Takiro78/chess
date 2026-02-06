@@ -184,28 +184,50 @@ public class GameState {
 
     //checks if given king is in check in given board
     public  boolean isKingInCheck(King king, Piece[][]board){
+        System.out.println("################");
+
+        for (Piece[] row : board){
+            for (Piece p : row) {
+                if (p == null) {
+                    System.out.print("   ");
+                } else {
+                    System.out.print(p + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+
 
         //get enemy pieces
         ArrayList<Piece> enemy = (king.getColor() == Color.WHITE) ? bPieces : wPieces;
 
-
-
-
         //loop trhough enemies
         for (Piece piece : enemy){
-
-
+            System.out.println("piece: " + piece);
+            System.out.println(" - (" + piece.getRow() + ", " + piece.getColumn() + ")");
 
             int row = piece.getRow();
             int column = piece.getColumn();
             //prevent iterating over pieces not on board anymore
             if (board[row][column] != piece){
+                System.out.println("Skipped");
                 continue;
             }
 
 
             //get moves for current piece
             List<moveDto> moves = piece.findMyMoves(board, piece.getRow(), piece.getColumn());
+
+            for (moveDto m : moves){
+                System.out.print(" - move: " + m);
+
+                if (m.getCol() == king.getColumn() && m.getRow() == king.getRow()){
+                    System.out.print(" _ !!! ");
+                }
+
+                System.out.print("\n");
+            }
 
             //check moves to see if enemy can now take friendly king
             for (moveDto m : moves){
@@ -214,7 +236,6 @@ public class GameState {
                 }
             }
         }
-
 
         return false;
     }
@@ -246,6 +267,8 @@ public class GameState {
         //find out who is friendly king for check check
         King king = ( p.getColor() == Color.WHITE) ? wKing : bKing;
 
+        System.out.println("===========================================");
+
         //loop through current pieces possible moves to simulate
         for (int i = moves.size()-1; i>=0; i--){
             int moveRow = moves.get(i).getRow();
@@ -261,6 +284,7 @@ public class GameState {
             tempBoard[row][col] = null;
 
             //check check
+
             if (isKingInCheck(king,tempBoard)){
                 moves.remove(i);
             }

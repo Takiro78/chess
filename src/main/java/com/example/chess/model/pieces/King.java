@@ -67,4 +67,9 @@ public class King extends Piece {
         setPath();
     }
 
+
+    @Override
+    public String toString() {
+        return "🤴";
+    }
 }

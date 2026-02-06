@@ -30,5 +30,8 @@ public class Knight extends Piece {
         setPath();
     }
 
-
+    @Override
+    public String toString() {
+        return "🐴";
+    }
 }
