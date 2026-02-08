@@ -51,4 +51,9 @@ public class Rook extends Piece {
 
         return validMoves;
     }
+
+    @Override
+    public String toString(){
+        return "\uD83C\uDFF0";
+    }
 }

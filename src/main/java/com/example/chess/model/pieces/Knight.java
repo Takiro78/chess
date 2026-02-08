@@ -30,5 +30,10 @@ public class Knight extends Piece {
         setPath();
     }
 
+    @Override
+    public String toString() {
+        return "\uD83D\uDC34";
+    }
+
 
 }

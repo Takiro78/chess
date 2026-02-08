@@ -16,36 +16,33 @@ public class GameState {
     private Piece[][] board = new Piece[8][8];
     public Piece[][] tempBoard = new Piece[8][8];
 
-    public Color turn =  Color.WHITE;
+    public Color turn = Color.WHITE;
 
-    private final King bKing = new King(0,4,Color.BLACK);
-    private final King wKing = new King(7,4,Color.WHITE);
+    private final King bKing = new King(0, 4, Color.BLACK);
+    private final King wKing = new King(7, 4, Color.WHITE);
 
-    public  ArrayList<Piece> wPieces = new ArrayList<>();
-    public  ArrayList<Piece> bPieces = new ArrayList<>();
+    public ArrayList<Piece> wPieces = new ArrayList<>();
+    public ArrayList<Piece> bPieces = new ArrayList<>();
 
 
     public GameState() {
-        bPieces.add(new Rook(0,0, Color.BLACK));
-        bPieces.add(new Knight(0,1,Color.BLACK));
-        bPieces.add(new Bishop(0,2,Color.BLACK));
-        bPieces.add(new Queen(0,3,Color.BLACK));
+        bPieces.add(new Rook(0, 0, Color.BLACK));
+        bPieces.add(new Knight(0, 1, Color.BLACK));
+        bPieces.add(new Bishop(0, 2, Color.BLACK));
+        bPieces.add(new Queen(0, 3, Color.BLACK));
         bPieces.add(bKing);
-        bPieces.add(new Bishop(0,5,Color.BLACK));
-        bPieces.add(new Knight(0,6,Color.BLACK));
-        bPieces.add(new Rook(0,7,Color.BLACK));
+        bPieces.add(new Bishop(0, 5, Color.BLACK));
+        bPieces.add(new Knight(0, 6, Color.BLACK));
+        bPieces.add(new Rook(0, 7, Color.BLACK));
 
-        bPieces.add(new Pawn(1,0,Color.BLACK));
-        bPieces.add(new Pawn(1,1,Color.BLACK));
-        bPieces.add(new Pawn(1,2,Color.BLACK));
-        bPieces.add(new Pawn(1,3,Color.BLACK));
-        bPieces.add(new Pawn(1,4,Color.BLACK));
-        bPieces.add(new Pawn(1,5,Color.BLACK));
-        bPieces.add(new Pawn(1,6,Color.BLACK));
-        bPieces.add(new Pawn(1,7,Color.BLACK));
-
-
-
+        bPieces.add(new Pawn(1, 0, Color.BLACK));
+        bPieces.add(new Pawn(1, 1, Color.BLACK));
+        bPieces.add(new Pawn(1, 2, Color.BLACK));
+        bPieces.add(new Pawn(1, 3, Color.BLACK));
+        bPieces.add(new Pawn(1, 4, Color.BLACK));
+        bPieces.add(new Pawn(1, 5, Color.BLACK));
+        bPieces.add(new Pawn(1, 6, Color.BLACK));
+        bPieces.add(new Pawn(1, 7, Color.BLACK));
 
 
         wPieces.add(new Rook(7, 0, Color.WHITE));
@@ -68,12 +65,12 @@ public class GameState {
 
 
         //intialize boards
-        for (Piece p: wPieces){
+        for (Piece p : wPieces) {
             board[p.getRow()][p.getColumn()] = p;
             tempBoard[p.getRow()][p.getColumn()] = p;
         }
 
-        for (Piece p: bPieces){
+        for (Piece p : bPieces) {
             board[p.getRow()][p.getColumn()] = p;
             tempBoard[p.getRow()][p.getColumn()] = p;
         }
@@ -82,36 +79,36 @@ public class GameState {
     }
 
 
-    public List<moveDto> getValidMoves(int row, int col){
-        Piece searchPiece =  board[row][col];
+    public List<moveDto> getValidMoves(int row, int col) {
+        Piece searchPiece = board[row][col];
         System.out.println(searchPiece);
 
         //stop player from looking at moves when not their turn
-        if (searchPiece.getColor() != turn){
+        if (searchPiece.getColor() != turn) {
             return null;
         }
 
         //get valid moves
         List<moveDto> pMoves = searchPiece.findMyMoves(board, row, col);
         //simulate moves
-        searchPiece.setMoves(simulateMoves(searchPiece,pMoves));
+        searchPiece.setMoves(simulateMoves(searchPiece, pMoves));
 
 //        List<moveDto> validMoves = searchPiece.getMoves();
         return searchPiece.getMoves();
     }
 
-    public boolean isValidAndMove(int pieceX,int pieceY,int moveX,int moveY){
+    public boolean isValidAndMove(int pieceX, int pieceY, int moveX, int moveY) {
 
         //find piece
         Piece pieceToMove = board[pieceX][pieceY];
         System.out.println("pieceToMove: " + pieceToMove);
 
         //if piece not current turn
-        if (pieceToMove.getColor() != this.turn){
+        if (pieceToMove.getColor() != this.turn) {
             return false;
         }
         //find if coordinates are valid move
-        boolean canMove = pieceToMove.isValid(board,moveX,moveY, pieceX,pieceY);
+        boolean canMove = pieceToMove.isValid(board, moveX, moveY, pieceX, pieceY);
 
 //        move piece
         if (canMove) {
@@ -122,7 +119,7 @@ public class GameState {
 
             }
 
-            if (pieceToMove instanceof King ){
+            if (pieceToMove instanceof King) {
 
                 if (moveY == pieceY + 2) {
                     // move rook from h-file to f-file
@@ -149,29 +146,32 @@ public class GameState {
             board[moveX][moveY] = board[pieceX][pieceY];
 //            Pieces.remove(board[pieceX][pieceY]);
             board[pieceX][pieceY] = null;
-        }
-        pieceToMove.findMyMoves(board,moveX,moveY);
 
-        this.turn =(this.turn ==Color.WHITE) ? Color.BLACK : Color.WHITE;
-        if (isCheckmate( (this.turn ==Color.WHITE) ? wPieces : bPieces)){
-            System.out.println(turn + " is in checkmate");
+            printBoard(tempBoard);
         }
+        pieceToMove.findMyMoves(board, moveX, moveY);
+
+        this.turn = (this.turn == Color.WHITE) ? Color.BLACK : Color.WHITE;
+//        if (isCheckmate((this.turn == Color.WHITE) ? wPieces : bPieces)) {
+//            System.out.println(turn + " is in checkmate");
+//        }
         return canMove;
     }
 
 
-    public ArrayList<PieceDto> getAllPieces(){
+    public ArrayList<PieceDto> getAllPieces() {
         ArrayList<PieceDto> pieceDTOs = new ArrayList<>();
-        for (Piece[] row : board){
+        for (Piece[] row : board) {
             for (Piece p : row) {
-                if(p != null){
-                    pieceDTOs.add(createDTO(p));}
+                if (p != null) {
+                    pieceDTOs.add(createDTO(p));
+                }
             }
         }
         return pieceDTOs;
     }
 
-    public PieceDto createDTO(Piece piece){
+    public PieceDto createDTO(Piece piece) {
 
         return new PieceDto(
                 piece.getClass().getSimpleName(),
@@ -183,23 +183,20 @@ public class GameState {
     }
 
     //checks if given king is in check in given board
-    public  boolean isKingInCheck(King king, Piece[][]board){
+    public boolean isKingInCheck(King king, Piece[][] board) {
 
         //get enemy pieces
         ArrayList<Piece> enemy = (king.getColor() == Color.WHITE) ? bPieces : wPieces;
 
 
-
-
         //loop trhough enemies
-        for (Piece piece : enemy){
-
+        for (Piece piece : enemy) {
 
 
             int row = piece.getRow();
             int column = piece.getColumn();
             //prevent iterating over pieces not on board anymore
-            if (board[row][column] != piece){
+            if (board[row][column] != piece) {
                 continue;
             }
 
@@ -208,8 +205,8 @@ public class GameState {
             List<moveDto> moves = piece.findMyMoves(board, piece.getRow(), piece.getColumn());
 
             //check moves to see if enemy can now take friendly king
-            for (moveDto m : moves){
-                if (m.getCol() == king.getColumn() && m.getRow() == king.getRow()){
+            for (moveDto m : moves) {
+                if (m.getCol() == king.getColumn() && m.getRow() == king.getRow()) {
                     return true;
                 }
             }
@@ -219,35 +216,25 @@ public class GameState {
         return false;
     }
 
-    public  Piece[][] resetBoard(){
-        Piece[][] board = new Piece[8][8];
-
-        for (Piece p: wPieces){
-            board[p.getRow()][p.getColumn()] = p;
-
-        }
-
-        for (Piece p: bPieces){
-            board[p.getRow()][p.getColumn()] = p;
-
-        }
-
-        return board;
+    public void resetTempBoard() {
+    tempBoard = new Piece[8][8];
+    for (int i = 0; i < 8; i++) {
+        tempBoard[i] = Arrays.copyOf(board[i], 8);
+    }
 
     }
 
 
-
-    public  List<moveDto> simulateMoves(Piece p, List<moveDto> moves){
+    public List<moveDto> simulateMoves(Piece p, List<moveDto> moves) {
         int row = p.getRow();
         int col = p.getColumn();
 //        System.out.println("before moves: " + moves);
 
         //find out who is friendly king for check check
-        King king = ( p.getColor() == Color.WHITE) ? wKing : bKing;
+        King king = (p.getColor() == Color.WHITE) ? wKing : bKing;
 
         //loop through current pieces possible moves to simulate
-        for (int i = moves.size()-1; i>=0; i--){
+        for (int i = moves.size() - 1; i >= 0; i--) {
             int moveRow = moves.get(i).getRow();
             int moveCol = moves.get(i).getCol();
 
@@ -255,22 +242,29 @@ public class GameState {
 //            System.out.println(p.getRow() + "pRow " + p.getColumn() + "col " );
 
             //simulate move
-            tempBoard [moveRow][moveCol] = p;
-            p.setRow(moveRow);
-            p.setColumn(moveCol);
+            tempBoard[moveRow][moveCol] = p;
+//            p.setRow(moveRow);
+//            p.setColumn(moveCol);
             tempBoard[row][col] = null;
 
             //check check
-            if (isKingInCheck(king,tempBoard)){
+
+
+
+            if (isKingInCheck(king, tempBoard)) {
                 moves.remove(i);
+//                System.out.println("this setup causes check");
             }
 
+//           printBoard(tempBoard);
+
+
             //reset piece's position
-            p.setRow(row);
-            p.setColumn(col);
+//            p.setRow(row);
+//            p.setColumn(col);
 
             //reset board
-            tempBoard = resetBoard();
+            resetTempBoard();
 
 
         }
@@ -280,20 +274,43 @@ public class GameState {
         return moves;
     }
 
-    public boolean isCheckmate(ArrayList<Piece> pieces){
+    public boolean isCheckmate(ArrayList<Piece> pieces) {
 
 
-        for (Piece searchPiece: pieces){
+        for (Piece searchPiece : pieces) {
 
             //get valid moves
             List<moveDto> pMoves = searchPiece.findMyMoves(board, searchPiece.getRow(), searchPiece.getColumn());
             //simulate moves
 
-            if (simulateMoves(searchPiece,pMoves).isEmpty()){
+            if (simulateMoves(searchPiece, pMoves).isEmpty()) {
                 return true;
             }
         }
         return false;
     }
 
+
+    public void printBoard(Piece[][] board) {
+
+
+        System.out.println("#############################");
+
+
+        for (Piece[] row : board) {
+            for (Piece p : row) {
+                if (p == null) {
+                    System.out.print("⬜"+" ");
+                } else {
+                    System.out.print(p + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        System.out.println("#############################");
+
+    }
 }
+

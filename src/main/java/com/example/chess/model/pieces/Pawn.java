@@ -89,4 +89,9 @@ public class Pawn extends Piece {
         return super.isValid(board, moveRow, moveCol, pieceX, pieceY);
     }
 
+    @Override
+    public String toString(){
+        return "\uD83D\uDC25";
+    }
+
 }
