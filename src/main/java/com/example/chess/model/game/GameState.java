@@ -147,7 +147,7 @@ public class GameState {
 //            Pieces.remove(board[pieceX][pieceY]);
             board[pieceX][pieceY] = null;
 
-            printBoard(tempBoard);
+//            printBoard(tempBoard);
         }
         pieceToMove.findMyMoves(board, moveX, moveY);
 
@@ -207,6 +207,9 @@ public class GameState {
             //check moves to see if enemy can now take friendly king
             for (moveDto m : moves) {
                 if (m.getCol() == king.getColumn() && m.getRow() == king.getRow()) {
+                    System.out.println("king is in check by "+piece.getColor()+" "+piece);
+                    System.out.println("king is at"+king.getRow()+" "+king.getColumn());
+                    System.out.println(piece+" can move to "+m.getCol()+" "+m.getCol()+" from "+row+" to "+column);
                     return true;
                 }
             }
@@ -233,6 +236,7 @@ public class GameState {
         //find out who is friendly king for check check
         King king = (p.getColor() == Color.WHITE) ? wKing : bKing;
 
+
         //loop through current pieces possible moves to simulate
         for (int i = moves.size() - 1; i >= 0; i--) {
             int moveRow = moves.get(i).getRow();
@@ -241,17 +245,20 @@ public class GameState {
 //            System.out.println("move row: " + moveRow + " col: " + moveCol);
 //            System.out.println(p.getRow() + "pRow " + p.getColumn() + "col " );
 
-            //simulate move
-            tempBoard[moveRow][moveCol] = p;
-//            p.setRow(moveRow);
+            //simulate move     p.setRow(moveRow);
 //            p.setColumn(moveCol);
+            tempBoard[moveRow][moveCol] = p;
+            p.setRow(moveRow);
+            p.setColumn(moveCol);
             tempBoard[row][col] = null;
 
             //check check
 
 
-
+            System.out.println("how board looks before king check");
+            printBoard(tempBoard);
             if (isKingInCheck(king, tempBoard)) {
+
                 moves.remove(i);
 //                System.out.println("this setup causes check");
             }
@@ -260,8 +267,8 @@ public class GameState {
 
 
             //reset piece's position
-//            p.setRow(row);
-//            p.setColumn(col);
+            p.setRow(row);
+            p.setColumn(col);
 
             //reset board
             resetTempBoard();
