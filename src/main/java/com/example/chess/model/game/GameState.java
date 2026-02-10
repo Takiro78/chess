@@ -27,9 +27,9 @@ public class GameState {
 
     public GameState() {
         bPieces.add(new Rook(0, 0, Color.BLACK));
-        bPieces.add(new Knight(0, 1, Color.BLACK));
-        bPieces.add(new Bishop(0, 2, Color.BLACK));
-        bPieces.add(new Queen(0, 3, Color.BLACK));
+//        bPieces.add(new Knight(0, 1, Color.BLACK));
+//        bPieces.add(new Bishop(0, 2, Color.BLACK));
+//        bPieces.add(new Queen(0, 3, Color.BLACK));
         bPieces.add(bKing);
         bPieces.add(new Bishop(0, 5, Color.BLACK));
         bPieces.add(new Knight(0, 6, Color.BLACK));

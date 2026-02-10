@@ -111,6 +111,9 @@ async function isValidAndMove(pieceX,pieceY,moveX,moveY){
         console.log(data);
         if (data){
             move(pieceX,pieceY,moveX,moveY);
+
+
+
         }
     }
     catch(error){
@@ -133,6 +136,43 @@ function move(pieceX,pieceY,moveX,moveY){
     if (enemy){
         enemy.remove();
 
+    }
+
+    // ---------- En Passant ----------
+    if (pieceToMove.classList.contains("Pawn")) {
+
+        // If pawn moves diagonally and destination is empty → en passant
+        if (pieceX !== moveX && !enemy) {
+
+            // enemy pawn is behind the destination square
+            const epPawn = document.querySelector(`.piece.pos-${pieceX}${moveY}`);
+
+            if (epPawn && epPawn !== pieceToMove) {
+                epPawn.remove();
+            }
+        }
+    }
+
+    //check if king is castleing
+    if (pieceToMove.classList.contains("King")){
+
+        //king side castling
+        if (moveY - pieceY === 2){
+            const rook = document.querySelector(`.piece.pos-${pieceX}7`)
+            if (rook){
+                rook.classList.remove(`pos-${pieceX}7`)
+                rook.classList.add(`pos-${pieceX}5`)
+            }
+        }
+        if (moveY - pieceY ===-2){
+
+            //queen side castling
+            const rook = document.querySelector(`.piece.pos-${pieceX}0`)
+            if (rook){
+                rook.classList.remove(`pos-${pieceX}0`)
+                rook.classList.add(`pos-${pieceX}3`)
+            }
+        }
     }
 
     //undo selected ui stuff

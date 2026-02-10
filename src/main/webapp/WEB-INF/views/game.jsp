@@ -20,7 +20,7 @@
 
         <c:forEach var="piece" items="${pieces}">
 
-                <img src="${piece.imgPath}" alt="${piece.type}" class="piece square pos-${piece.row}${piece.col}">
+                <img src="${piece.imgPath}" alt="${piece.type}" class="piece ${piece.type} square pos-${piece.row}${piece.col}">
 
         </c:forEach>
 
